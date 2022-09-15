@@ -1,0 +1,69 @@
+
+<!-- ************************************  11111   ************************************** -->
+<!-- using onload function  -->
+
+<h4 id="startLat"></h4>
+<h4 id="startLon"></h4>
+<script>
+  window.onload = function () {
+    var startPos;
+    var geoOptions = {
+    maximumAge: 5 * 60 * 1000,
+  };
+
+  var geoSuccess = function (position) {
+    startPos = position;
+    document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+    document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+  };
+  var geoError = function (error) {
+    console.log('Error occurred. Error code: ' + error.code);
+    // error.code can be:
+    //   0: unknown error
+    //   1: permission denied
+    //   2: position unavailable (error response from location provider)
+    //   3: timed out
+  };
+
+  navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+};
+</script>
+
+
+<!-- ************************************  22222   ************************************** -->
+
+<script>
+    function geoloc(success, fail){
+        var is_echo = false;
+        if(navigator && navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(pos) {
+                    if (is_echo){ return; }
+                    is_echo = true;
+                    success(pos.coords.latitude,pos.coords.longitude);
+                },
+                function() {
+                    if (is_echo){ return; }
+                    is_echo = true;
+                    fail();
+                }
+            );
+        } 
+        else {
+            fail();
+        }
+    }
+    function success(lat, lng){
+        var data = {lat:lat, lng:lng};
+        // document.getElementById('location_code').value = JSON.stringify(data);
+        var realtime_location = JSON.stringify(data);
+    
+        console.log(realtime_location);
+
+    //    console.log(data);
+    }
+    function fail(){
+        alert("failed");
+    }
+    geoloc(success, fail);
+  </script>
