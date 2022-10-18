@@ -30,7 +30,10 @@
 				changeYear: false,
 				maxDate: '7D',
 				minDate: '-0D',
-				beforeShowDay: DisableDates
+				beforeShowDay: DisableDates,
+				onClose: function () {
+					alert("Date Picked");
+				}
 			});
 		});
 	
