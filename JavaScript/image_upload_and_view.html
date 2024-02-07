@@ -1,0 +1,112 @@
+<style>
+   .picture__input {
+        display: none;
+    }
+
+    .picture {
+        width: 120px;
+        height: 120px;
+        aspect-ratio: 16/9;
+        background: #28a74517;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        border: 2px dashed #28a7459c;
+        cursor: pointer;
+        font-family: sans-serif;
+        transition: color 300ms ease-in-out, background 300ms ease-in-out;
+        outline: none;
+        overflow: hidden;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .picture:hover {
+        color: #777;
+        background: #ccc;
+    }
+
+    .picture:active {
+        border-color: turquoise;
+        color: turquoise;
+        background: #eee;
+    }
+
+    .picture:focus {
+        color: #777;
+        background: #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .picture__img {
+        max-width: 100%;
+    }  
+<style>
+
+
+
+<div class="col-md-12 d-flex" style="overflow-x: scroll;">
+      <div class="form-group pr-2">
+          <label class="picture" for="picture1__input" tabIndex="0">
+              <span class="picture__image">Profile Image <br> 270*270 px</span>
+          </label>
+          <input type="file" name="profile_image" id="picture1__input" class="picture__input">
+      </div>
+
+      <div class="form-group pr-2">
+          <label class="picture" style="width: 160px;" for="picture2__input" tabIndex="0">
+              <span class="picture__image">NID Front Side <br> 460*285 px</span>
+          </label>
+          <input type="file" name="nid_front" id="picture2__input" class="picture__input">
+      </div>
+      <div class="form-group pr-2">
+          <label class="picture" style="width: 160px;" for="picture3__input" tabIndex="0">
+              <span class="picture__image">NID Back Side <br> 460*285 px</span>
+          </label>
+          <input type="file" name="nid_back" id="picture3__input" class="picture__input">
+      </div>
+      <div class="form-group pr-2">
+          <label class="picture" style="width: 160px;" for="picture4__input" tabIndex="0">
+              <span class="picture__image">Certificates Upto 3 <br> 460*285 px</span>
+          </label>
+          <input type="file" name="certificate[]" id="picture4__input" class="picture__input" multiple>
+      </div>
+      <div class="form-group pr-2">
+          <label class="picture" style="width: 160px;" for="picture5__input" tabIndex="0">
+              <span class="picture__image">Chairman Certificate <br> 460*285 px</span>
+          </label>
+          <input type="file" name="chairman_certificate" id="picture5__input" class="picture__input">
+      </div>
+
+
+</div>
+
+
+/*   must be use jquery lib */
+  <script>
+   {{-- user own image script --}}
+    <script>
+       $(document).ready(function() {
+            $(".picture__input").each(function(index) {
+                const pictureImage = $(this).prev().find(".picture__image");
+                const pictureImageTxt = ``;
+
+                $(this).on("change", function(e) {
+                    const file = e.target.files[0];
+
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const img = $("<img>").attr("src", e.target.result).addClass("picture__img");
+                            pictureImage.empty().append(img);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        // pictureImage.html(pictureImageTxt);
+                    }
+                });
+            });
+        });
+    </script>
+  </script>
