@@ -1,0 +1,44 @@
+<?php
+// Replace 'your_database_name', 'username', and 'password' with your actual database credentials
+$servername = "localhost";
+$username = "username";
+$password = "password";
+$database = "your_database_name";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Query to get table names
+$sql = "SHOW TABLES";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Output data of each row
+    while ($row = $result->fetch_assoc()) {
+        $tableName = $row["Tables_in_" . $database];
+
+        // Check if the table contains a column named 'domain'
+        $columnsSql = "SHOW COLUMNS FROM $tableName LIKE 'domain'";
+        $columnsResult = $conn->query($columnsSql);
+        if ($columnsResult->num_rows > 0) {
+            // Delete rows where 'domain' is not equal to 'aborani.com'
+            $deleteSql = "DELETE FROM $tableName WHERE domain != 'aborani.com'";
+            if ($conn->query($deleteSql) === TRUE) {
+                echo "Rows deleted successfully from table '$tableName'.<br>";
+            } else {
+                echo "Error deleting rows: " . $conn->error . "<br>";
+            }
+        }
+    }
+} else {
+    echo "0 results";
+}
+
+// Close connection
+$conn->close();
+?>
